@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>총오기자 — 영상 속 상품</title>
+<meta name="description" content="총오기자 릴스에 나온 상품 모음">
+<style>
+  :root { --bg:#f6f4ef; --card:#fff; --ink:#1c1b18; --mute:#6f6a60;
+           --accent:#0f62fe; --line:#e5e1d8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#141311; --card:#1f1e1b; --ink:#f0ede6;
+             --mute:#a09a8e; --line:#33302a; }
+  }
+  * { margin:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--ink);
+         font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+         max-width:520px; margin:0 auto; padding:0 16px 48px; }
+  .notice { font-size:12px; color:var(--mute); background:var(--card);
+             border:1px solid var(--line); border-radius:10px;
+             padding:10px 14px; margin:14px 0 22px; line-height:1.5; }
+  header { text-align:center; padding-top:34px; }
+  header h1 { font-size:26px; letter-spacing:-0.5px; }
+  header p { color:var(--mute); font-size:14px; margin-top:6px; }
+  .card { background:var(--card); border:1px solid var(--line);
+           border-radius:14px; padding:16px; margin-bottom:12px;
+           display:flex; align-items:center; gap:14px; }
+  .card .txt { flex:1; min-width:0; }
+  .card .name { font-weight:700; font-size:16px; }
+  .card .date { color:var(--mute); font-size:12px; margin-top:3px; }
+  .card a { flex-shrink:0; background:var(--accent); color:#fff;
+             text-decoration:none; font-size:14px; font-weight:600;
+             padding:10px 14px; border-radius:10px; }
+  .empty { text-align:center; color:var(--mute); padding:40px 0;
+            font-size:14px; line-height:1.7; }
+  footer { text-align:center; margin-top:30px; }
+  footer a { color:var(--accent); text-decoration:none; font-size:14px;
+              font-weight:600; }
+</style>
+</head>
+<body>
+<header>
+  <h1>총오기자 🎙</h1>
+  <p>릴스에 나온 상품, 여기 모아뒀습니다</p>
+</header>
+<div class="notice">이 페이지의 상품 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
+<div class="empty">아직 등록된 상품이 없습니다.<br>
+릴스에서 상품이 소개되면 여기에 차곡차곡 쌓입니다.</div>
+<footer><a href="https://www.instagram.com/total_ogija">📺 인스타그램에서 릴스 보기</a></footer>
+</body>
+</html>
