@@ -117,9 +117,15 @@ window.goatcounter = { path: function () {
     .then(function (r) { return r.json(); })
     .then(function (d) { cb(d.count); }).catch(function () {}); }
   var path = encodeURIComponent(location.pathname.replace(/\/+$/, "") || "/");
-  var today = new Date().toISOString().slice(0, 10);
-  get(base + path + ".json", function (n) { put("v-total", n); });
-  get(base + path + ".json?start=" + today, function (n) { put("v-today", n); });
+  // GoatCounter의 start는 "그 날짜의 끝부터"다 (실측: start=오늘 → 0,
+  // start=어제 → 오늘 방문 수). 그래서 '오늘'은 어제 날짜로 묻는다.
+  function localDate(off) {
+    var d = new Date(Date.now() + off * 864e5);
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0")
+      + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  get(base + path + ".json?start=2026-01-01", function (n) { put("v-total", n); });
+  get(base + path + ".json?start=" + localDate(-1), function (n) { put("v-today", n); });
   // 상품 버튼 클릭을 이벤트로 남긴다 — 어떤 상품이 클릭되는지가
   // 진열 유지/회전의 근거가 된다.
   document.querySelectorAll(".card a").forEach(function (a) {
