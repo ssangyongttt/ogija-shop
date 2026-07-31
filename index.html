@@ -3,49 +3,118 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>총오기자 — 영상 속 상품</title>
-<meta name="description" content="총오기자 릴스에 나온 상품 모음">
+<title>총오기자 — 매일 뉴스를 릴스로</title>
+<meta name="description" content="총오기자 편성표와 릴스 속 상품 모음">
 <style>
-  :root { --bg:#f6f4ef; --card:#fff; --ink:#1c1b18; --mute:#6f6a60;
-           --accent:#0f62fe; --line:#e5e1d8; }
+  :root {
+    --bg:#F4F1EA; --panel:#FFFFFF; --ink:#171B20; --mute:#6E7684;
+    --accent:#C4544B; --accent-ink:#fff; --line:#E3DED2; --chip:#EEE9DE;
+  }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#141311; --card:#1f1e1b; --ink:#f0ede6;
-             --mute:#a09a8e; --line:#33302a; }
+    :root {
+      --bg:#171B20; --panel:#1E242B; --ink:#F2EFE9; --mute:#8C96A3;
+      --accent:#F0A6A0; --accent-ink:#171B20; --line:#2E353D; --chip:#242B33;
+    }
   }
   * { margin:0; box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
   body { background:var(--bg); color:var(--ink);
          font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
-         max-width:520px; margin:0 auto; padding:0 16px 48px; }
-  .notice { font-size:12px; color:var(--mute); background:var(--card);
-             border:1px solid var(--line); border-radius:10px;
-             padding:10px 14px; margin:14px 0 22px; line-height:1.5; }
-  header { text-align:center; padding-top:34px; }
-  header h1 { font-size:26px; letter-spacing:-0.5px; }
-  header p { color:var(--mute); font-size:14px; margin-top:6px; }
-  .card { background:var(--card); border:1px solid var(--line);
-           border-radius:14px; padding:16px; margin-bottom:12px;
-           display:flex; align-items:center; gap:14px; }
+         max-width:520px; margin:0 auto; padding:0 18px 56px; }
+  a { text-decoration:none; }
+
+  .disclosure { font-size:11.5px; color:var(--mute); text-align:center;
+                 padding:10px 6px 0; line-height:1.5; }
+
+  header { text-align:center; padding-top:26px; }
+  .avatar { width:158px; height:158px; border-radius:50%;
+             object-fit:cover;
+             box-shadow:0 10px 34px rgba(0,0,0,.28); }
+  .onair { display:inline-flex; align-items:center; gap:6px;
+            background:var(--accent); color:var(--accent-ink);
+            font-size:11px; font-weight:800; letter-spacing:1.5px;
+            padding:4px 12px; border-radius:999px; margin-top:14px; }
+  .onair .dot { width:6px; height:6px; border-radius:50%;
+                 background:currentColor; animation:blink 1.6s infinite; }
+  @keyframes blink { 50% { opacity:.25; } }
+  header h1 { font-size:30px; letter-spacing:-1px; margin-top:10px; }
+  header .handle { color:var(--mute); font-size:13px; margin-top:2px; }
+  header .tag { font-size:14.5px; margin-top:10px; line-height:1.6; }
+
+  .section { margin-top:30px; }
+  .section > h2 { font-size:13px; font-weight:800; letter-spacing:2px;
+                   color:var(--mute); margin-bottom:12px;
+                   display:flex; align-items:center; gap:10px; }
+  .section > h2::after { content:""; flex:1; height:1px;
+                          background:var(--line); }
+
+  .slot { display:flex; align-items:baseline; gap:12px;
+           padding:9px 2px; border-bottom:1px solid var(--line); }
+  .slot:last-child { border-bottom:none; }
+  .slot .time { font-weight:800; font-size:14px; color:var(--accent);
+                 font-variant-numeric:tabular-nums; min-width:44px; }
+  .slot .name { font-weight:700; font-size:14.5px; }
+  .slot .desc { color:var(--mute); font-size:12px; margin-left:auto;
+                 text-align:right; }
+
+  .card { background:var(--panel); border:1px solid var(--line);
+           border-radius:16px; padding:15px 16px; margin-bottom:11px;
+           display:flex; align-items:center; gap:14px;
+           box-shadow:0 2px 10px rgba(0,0,0,.05); }
   .card .txt { flex:1; min-width:0; }
-  .card .name { font-weight:700; font-size:16px; }
+  .card .name { font-weight:700; font-size:15.5px; line-height:1.4; }
   .card .date { color:var(--mute); font-size:12px; margin-top:3px; }
-  .card a { flex-shrink:0; background:var(--accent); color:#fff;
-             text-decoration:none; font-size:14px; font-weight:600;
-             padding:10px 14px; border-radius:10px; }
-  .empty { text-align:center; color:var(--mute); padding:40px 0;
-            font-size:14px; line-height:1.7; }
-  footer { text-align:center; margin-top:30px; }
-  footer a { color:var(--accent); text-decoration:none; font-size:14px;
-              font-weight:600; }
+  .card a { flex-shrink:0; background:var(--accent); color:var(--accent-ink);
+             font-size:13.5px; font-weight:700; padding:10px 15px;
+             border-radius:11px; }
+  .empty { background:var(--panel); border:1px dashed var(--line);
+            border-radius:16px; text-align:center; color:var(--mute);
+            padding:34px 16px; font-size:13.5px; line-height:1.8; }
+
+  .igbtn { display:flex; align-items:center; justify-content:center;
+            gap:8px; background:var(--ink); color:var(--bg);
+            font-size:15px; font-weight:700; border-radius:14px;
+            padding:15px; margin-top:26px; }
+  footer { text-align:center; color:var(--mute); font-size:11px;
+            margin-top:26px; line-height:1.7; }
 </style>
 </head>
 <body>
+<p class="disclosure">이 페이지의 상품 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
 <header>
-  <h1>총오기자 🎙</h1>
-  <p>릴스에 나온 상품, 여기 모아뒀습니다</p>
+  <img class="avatar" src="profile.jpg" alt="오기자 로고">
+  <div><span class="onair"><span class="dot"></span>ON AIR</span></div>
+  <h1>총오기자</h1>
+  <div class="handle">@total_ogija</div>
+  <p class="tag"><b>세계는 넓고, 정보는 빠르다!</b><br>
+     매일 6번 — 날씨 · 브리핑 · 생활 · 문화</p>
 </header>
-<div class="notice">이 페이지의 상품 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
-<div class="empty">아직 등록된 상품이 없습니다.<br>
+
+<div class="section">
+  <h2>🛒 릴스 속 상품</h2>
+  <div class="empty">아직 등록된 상품이 없습니다.<br>
 릴스에서 상품이 소개되면 여기에 차곡차곡 쌓입니다.</div>
-<footer><a href="https://www.instagram.com/total_ogija">📺 인스타그램에서 릴스 보기</a></footer>
+</div>
+
+<div class="section">
+  <h2>📺 오늘의 편성표</h2>
+  <div class="panel">
+    <div class="slot"><span class="time">06:00</span>
+      <span class="name">오기자 날씨</span><span class="desc">출근 전 오늘·내일 전국 예보</span></div>
+    <div class="slot"><span class="time">07:10</span>
+      <span class="name">오기자 모닝브리핑</span><span class="desc">밤사이 놓친 뉴스 한 번에</span></div>
+    <div class="slot"><span class="time">14:00</span>
+      <span class="name">생활톡톡</span><span class="desc">물가·할인·신상 생활 정보</span></div>
+    <div class="slot"><span class="time">18:00</span>
+      <span class="name">오기자 날씨</span><span class="desc">퇴근길, 내일 날씨 미리</span></div>
+    <div class="slot"><span class="time">20:00</span>
+      <span class="name">오기자 뉴스마감</span><span class="desc">하루를 정리하는 종합 뉴스</span></div>
+    <div class="slot"><span class="time">23:00</span>
+      <span class="name">문화소식</span><span class="desc">공연·전시·이번 주 일정</span></div>
+  </div>
+</div>
+
+<a class="igbtn" href="https://www.instagram.com/total_ogija">인스타그램에서 릴스 보기 →</a>
+<footer>매일 같은 시간, 같은 자리에서.<br>총오기자 · total_ogija</footer>
 </body>
 </html>
