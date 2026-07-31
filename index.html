@@ -97,8 +97,32 @@
 </div>
 
 <a class="igbtn" href="https://www.instagram.com/total_ogija">인스타그램에서 릴스 보기 →</a>
-<div class="visits"><img src="https://hits.sh/ssangyongttt.github.io/ogija-shop.svg?label=%EB%B0%A9%EB%AC%B8&color=6E7684&labelColor=2E353D" alt="방문 수"></div>
+<div class="visits">오늘 <b id="v-today">–</b> · 누적 <b id="v-total">–</b> 방문</div>
 <footer>세상은 넓고, 핫템은 많다!<br>오기자 마켓 · @total_ogija</footer>
-
+<script data-goatcounter="https://ogija.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<script>
+(function () {
+  var base = "https://ogija.goatcounter.com/counter/";
+  function put(id, n) { var el = document.getElementById(id);
+    if (el && n != null) el.textContent = n; }
+  function get(url, cb) { fetch(url).then(function (r) { return r.json(); })
+    .then(function (d) { cb(d.count); }).catch(function () {}); }
+  var path = encodeURIComponent(location.pathname);
+  var today = new Date().toISOString().slice(0, 10);
+  get(base + path + ".json", function (n) { put("v-total", n); });
+  get(base + path + ".json?start=" + today, function (n) { put("v-today", n); });
+  // 상품 버튼 클릭을 이벤트로 남긴다 — 어떤 상품이 클릭되는지가
+  // 진열 유지/회전의 근거가 된다.
+  document.querySelectorAll(".card a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      if (window.goatcounter && goatcounter.count)
+        goatcounter.count({ path: "click-" + a.closest(".card")
+          .querySelector(".name").textContent.trim().slice(0, 40),
+          event: true });
+    });
+  });
+})();
+</script>
 </body>
 </html>
