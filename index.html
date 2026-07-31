@@ -99,6 +99,13 @@
 <a class="igbtn" href="https://www.instagram.com/total_ogija">인스타그램에서 릴스 보기 →</a>
 <div class="visits">오늘 <b id="v-today">–</b> · 누적 <b id="v-total">–</b> 방문</div>
 <footer>세상은 넓고, 핫템은 많다!<br>오기자 마켓 · @total_ogija</footer>
+<script>
+// 경로 정규화 — 쿼리(?v=7)와 끝 슬래시를 떼서 한 경로로 모은다.
+// 안 하면 방문이 /ogija-shop, /ogija-shop/?v=7 등으로 흩어져
+// 카운터 조회와 어긋난다 (실측: 표시는 0인데 대시보드엔 5 visits).
+window.goatcounter = { path: function () {
+  return location.pathname.replace(/\/+$/, "") || "/"; } };
+</script>
 <script data-goatcounter="https://ogija.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 <script>
@@ -106,9 +113,10 @@
   var base = "https://ogija.goatcounter.com/counter/";
   function put(id, n) { var el = document.getElementById(id);
     if (el && n != null) el.textContent = n; }
-  function get(url, cb) { fetch(url).then(function (r) { return r.json(); })
+  function get(url, cb) { fetch(url, {cache: "no-store"})
+    .then(function (r) { return r.json(); })
     .then(function (d) { cb(d.count); }).catch(function () {}); }
-  var path = encodeURIComponent(location.pathname);
+  var path = encodeURIComponent(location.pathname.replace(/\/+$/, "") || "/");
   var today = new Date().toISOString().slice(0, 10);
   get(base + path + ".json", function (n) { put("v-total", n); });
   get(base + path + ".json?start=" + today, function (n) { put("v-today", n); });
